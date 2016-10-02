@@ -12,8 +12,6 @@ public class TrafficLight {
 
     public void checkColorTrafficLight() {
 
-        colorsSignalArray = new String[]{"Зеленый", "Желтый", "Красный"};
-        intervalsSignalArray = new int[]{3, 1, 1};
         int intervalsInHour = countIntervalInHour();
         DataInput dataInput = new DataInput();
         if (!dataInput.getTimeFromUser()) {
