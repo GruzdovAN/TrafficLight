@@ -1,7 +1,8 @@
-
 public class Main {
     public static void main(String[] args) {
-        TrafficLight trafficLight = new TrafficLight();
-        trafficLight.checkTrafficLight();
+        String[] colorsSignalArray = new String[]{"Зеленый", "Желтый", "Красный"};
+        int[] intervalsSignalArray = new int[]{3, 1, 1};
+        TrafficLight trafficLight = new TrafficLight(colorsSignalArray,intervalsSignalArray);
+        trafficLight.checkColorTrafficLight();
     }
 }
