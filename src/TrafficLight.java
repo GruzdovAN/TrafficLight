@@ -1,53 +1,41 @@
-import java.util.Scanner;
-
+/**
+ * Класс для создания светофора
+ */
 public class TrafficLight {
-    private double time;
+    String[] colorsSignalArray;
+    int[] intervalsSignalArray;
 
-    public void checkTrafficLight() {
-        int colorGreenInterval = 3;
-        int colorRedInterval = 1;
-        int colorYellowInterval = 1;
-        int intervalsInHour = 5;
-        String colorGreen = "Зеленый";
-        String colorYellow = "Желтый";
-        String colorRed = "Красный";
-        if (!getTimeFromUser()) {
-            double getInterval = time % intervalsInHour;
+    public TrafficLight(String[] colorsSignalArray, int[] intervalsSignalArray) {
+        this.colorsSignalArray = colorsSignalArray;
+        this.intervalsSignalArray = intervalsSignalArray;
+    }
+
+    public void checkColorTrafficLight() {
+
+        colorsSignalArray = new String[]{"Зеленый", "Желтый", "Красный"};
+        intervalsSignalArray = new int[]{3, 1, 1};
+        int intervalsInHour = countIntervalInHour();
+        DataInput dataInput = new DataInput();
+        if (!dataInput.getTimeFromUser()) {
+            int sumInterval = 0;
+            double getInterval = dataInput.getTime() % intervalsInHour;
             String getColorFromTrafficLight = "";
-            if (getInterval >= 0 && getInterval < colorGreenInterval) {
-                getColorFromTrafficLight = colorGreen;
-            } else if (getInterval < colorGreenInterval + colorYellowInterval) {
-                getColorFromTrafficLight = colorYellow;
-            } else if (getInterval < colorGreenInterval + colorYellowInterval + colorRedInterval) {
-                getColorFromTrafficLight = colorRed;
+            for (int i = 0; i < intervalsSignalArray.length; i++) {
+                sumInterval = sumInterval + intervalsSignalArray[i];
+                if (getInterval < sumInterval) {
+                    getColorFromTrafficLight = colorsSignalArray[i];
+                    break;
+                }
             }
             System.out.println(getColorFromTrafficLight);
         }
     }
 
-    private boolean getTimeFromUser() {
-        Scanner scanner = new Scanner(System.in);
-        boolean isCorrectInputValue = false;
-        boolean isExitProgram = false;
-        String symbolForExit = "q";
-        System.out.println("Для определения текущего цвета светофора, введите минуты, прошедшие с начала часа.");
-        System.out.println("Для прекращения работы программы введите " + symbolForExit);
-        while (!isCorrectInputValue) {
-            if (scanner.hasNextDouble()) {
-                time = scanner.nextDouble();
-                isCorrectInputValue = true;
-            } else if ((scanner.nextLine().equals(symbolForExit))) {
-                isExitProgram = true;
-                break;
-            } else {
-                System.out.println("Введенное значение не является числом, попробуйте еще раз!");
-            }
-            scanner.nextLine();
-            if (isCorrectInputValue && time <= 0) {
-                System.out.println("Введенное значние должно быть положительным числом, попробуйте еще раз!");
-                isCorrectInputValue = false;
-            }
+    private int countIntervalInHour() {
+        int intervalCount = 0;
+        for (int i = 0; i < intervalsSignalArray.length; i++) {
+            intervalCount = intervalCount + intervalsSignalArray[i];
         }
-        return isExitProgram;
+        return intervalCount;
     }
 }
